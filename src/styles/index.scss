@@ -1,0 +1,32 @@
+$body-color: slateblue;
+
+body {
+  color: $body-color;
+  font-family: sans-serif;
+}
+
+// Game
+
+.single-block {
+  display: block;
+  border: 1px solid gray;
+  height: 100px;
+  width: 100px;
+}
+
+.row {
+  display: flex;
+}
+
+.poison {
+  background-image: url("./assets/poison.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.mario {
+  background-image: url("./assets/Paper-Mario-icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
