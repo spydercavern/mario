@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", event => {
   init();
 });
 
-const NUMBER_OF_GRIDS = 5;
+const NUMBER_OF_GRIDS = 10;
 let game = null;
 let gameContainer = null;
 
@@ -22,21 +22,35 @@ const init = () => {
 };
 
 const initEventHandlers = async () => {
-  var btnEl = document.querySelector("#move-btn");
+  var btnEl = document.querySelector("#start-btn");
   btnEl.addEventListener("click", () => {
+    if (game && !game.isPlaying) {
+      game.play();
+    }
+  });
+
+  var payseBtnEl = document.querySelector("#pause-btn");
+  payseBtnEl.addEventListener("click", () => {
     if (game) {
-      game.move();
+      game.pause();
     }
   });
 
   document.addEventListener("keydown", handleKeyDown);
 
   function handleKeyDown(e) {
+    if (game && !game.isPlaying) {
+      game.play();
+    }
     if (e.keyCode === 38) {
       //up arrow
-      game.changeDirection("V"); // up arrow
+      game.changeDirection("U"); // up arrow
     } else if (e.keyCode === 40) {
-      game.changeDirection("H");
+      game.changeDirection("D");
+    } else if (e.keyCode === 37) {
+      game.changeDirection("L");
+    } else if (e.keyCode === 39) {
+      game.changeDirection("R");
     }
   }
 };
