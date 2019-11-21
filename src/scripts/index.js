@@ -11,6 +11,31 @@ const NUMBER_OF_GRIDS = 10;
 let game = null;
 let gameContainer = null;
 
+function handleKeyDown(e) {
+  if (game && !game.isPlaying) {
+    game.play();
+  }
+  if (game && game.isPlaying && e.keyCode === 32) {
+    // spacebar
+    game.pause();
+  }
+
+  if (e.keyCode === 38) {
+    //up arrow
+    game.changeDirection("U"); // up arrow
+  } else if (e.keyCode === 40) {
+    game.changeDirection("D");
+  } else if (e.keyCode === 37) {
+    game.changeDirection("L");
+  } else if (e.keyCode === 39) {
+    game.changeDirection("R");
+  }
+}
+
+const getUserInput = () => {
+  return window.prompt("Number of Grids", `${NUMBER_OF_GRIDS}`);
+};
+
 const init = () => {
   // fetch the number of grids from the user
   const numberOfGrids = getUserInput();
@@ -38,23 +63,17 @@ const initEventHandlers = async () => {
 
   document.addEventListener("keydown", handleKeyDown);
 
-  function handleKeyDown(e) {
-    if (game && !game.isPlaying) {
-      game.play();
-    }
-    if (e.keyCode === 38) {
-      //up arrow
-      game.changeDirection("U"); // up arrow
-    } else if (e.keyCode === 40) {
-      game.changeDirection("D");
-    } else if (e.keyCode === 37) {
-      game.changeDirection("L");
-    } else if (e.keyCode === 39) {
-      game.changeDirection("R");
-    }
-  }
-};
+  gameContainer.addEventListener("eat-mushroom", e => {
+    console.dir(`Mushroom Score ${e.detail.score}`);
+    updateScore(e.detail.score);
+  });
 
-const getUserInput = () => {
-  return window.prompt("Number of Grids", `${NUMBER_OF_GRIDS}`);
+  gameContainer.addEventListener("game-over", e => {
+    updateScore(0);
+  });
+
+  function updateScore(score) {
+    let scoreEl = getElem("#game-score");
+    scoreEl.innerText = `Score: ${score}`;
+  }
 };
